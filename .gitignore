@@ -174,3 +174,5 @@ gradle-app.setting
 
 /.idea/
 /hibernate.iml
+/Hibernate.iml
+src/test/
