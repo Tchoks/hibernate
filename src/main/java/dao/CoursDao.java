@@ -21,11 +21,10 @@ public class CoursDao extends GenericDao<Cours,Integer> {
             List<Cours> cours = session.createQuery("from Cours ").getResultList();
             for (Cours c : cours) {
                 System.out.println("\tId cours: " + c.getId());
-                System.out.println("\tformation: " + c.getFormation());
+                System.out.println("\tformation name: " + c.getFormation().getNom_formation());
                 System.out.println("\tnom cours: " + c.getNom_cours());
             }
             transaction.commit();
-
         } catch (HibernateException he) {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
@@ -33,8 +32,17 @@ public class CoursDao extends GenericDao<Cours,Integer> {
     }
 
     @Override
-    public Cours findById(SessionFactory sessionFactory, Transaction transaction, Integer integer) {
-        return null;
+    public Cours findById(SessionFactory sessionFactory, Transaction transaction, Integer id) {
+        Cours cours = null;
+        try(Session session = sessionFactory.openSession() ) {
+          transaction = session.beginTransaction();
+          cours = session.get(Cours.class, id);
+          transaction.commit();
+        }catch (HibernateException he) {
+            if (transaction != null) transaction.rollback();
+            he.printStackTrace();
+        }
+        return cours;
     }
 
     @Override
@@ -57,7 +65,19 @@ public class CoursDao extends GenericDao<Cours,Integer> {
     }
 
     @Override
-    public boolean delete(SessionFactory sessionFactory, Transaction transaction, Cours object) {
-        return false;
+    public boolean delete(SessionFactory sessionFactory, Transaction transaction, Cours cours) {
+        boolean flag = false;
+        try (Session session = sessionFactory.openSession()) {
+            transaction = session.beginTransaction();
+            //Formation formation = cours.getFormation();
+            //formation.getList_cours().remove(cours);
+            session.delete(cours);
+            transaction.commit();
+            flag = true;
+        } catch (HibernateException he) {
+            if (transaction != null) transaction.rollback();
+            he.printStackTrace();
+        }
+        return flag;
     }
 }

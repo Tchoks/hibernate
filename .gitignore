@@ -176,3 +176,5 @@ gradle-app.setting
 /hibernate.iml
 /Hibernate.iml
 src/test/
+/src/main/java/domain/Address.java
+/src/main/java/domain/Employee.java

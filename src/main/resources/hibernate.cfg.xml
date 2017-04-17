@@ -33,10 +33,11 @@
        <!-- <mapping resource="domain/Employee.hbm.xml"/> -->
         <mapping class="domain.Formation"/>
         <mapping class="domain.Cours"/>
+        <mapping class="domain.Salle"/>
         <!--<mapping class="domain.Seance"/>
          <mapping class="domain.Employee"/>
         <mapping class="domain.Address"/>
-        <mapping class="domain.Salle"/>-->
+        -->
 
     </session-factory>
 </hibernate-configuration>

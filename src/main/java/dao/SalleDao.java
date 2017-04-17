@@ -1,8 +1,7 @@
 package dao;
 
-
-import domain.Cours;
-import domain.Formation;
+import domain.Salle;
+import domain.SalleId;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,31 +10,20 @@ import util.HibernateUtil;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by marti on 17/04/2017.
  */
-public class FormationDao extends GenericDao<Formation, Integer> {
-
-
+public class SalleDao extends GenericDao<Salle, SalleId>  {
     @Override
     public void findAll(SessionFactory sessionFactory, Transaction transaction) {
-        List<String> headersList = Arrays.asList("Id Formation", "Formation Name", "Cours List");
+        List<String> headersList = Arrays.asList("batiment", "numero salle", "capacite");
         List<List<String>> rowsList = null;
         try(Session session = sessionFactory.openSession() ) {
             transaction = session.beginTransaction();
-            List<Formation> formations = session.createQuery("from Formation ").list();
-            for (Formation formation : formations) {
-                //System.out.println("\tId formation: " + formation.getId());
-                //System.out.println("\tformation name : " + formation.getNom_formation());
-                Set<Cours> cours = formation.getList_cours();
-                StringBuffer buffer = new StringBuffer();
-                for (Cours c : cours) {
-                    buffer.append(c.getNom_cours()).append("; ");
-                }
-                //System.out.println("Cours List: " + buffer);
-                rowsList = Arrays.asList( Arrays.asList(String.valueOf(formation.getId()), formation.getNom_formation(), buffer.toString()));
+            List<Salle> salles = session.createQuery("from Salle").getResultList();
+            for (Salle salle : salles) {
+                rowsList = Arrays.asList(Arrays.asList(salle.getId().getBatiment(), salle.getId().getNumero_salle(), String.valueOf(salle.getCapacite())));
                 HibernateUtil.table(headersList, rowsList);
             }
             transaction.commit();
@@ -43,29 +31,30 @@ public class FormationDao extends GenericDao<Formation, Integer> {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
         }
+
     }
 
     @Override
-    public Formation findById(SessionFactory sessionFactory, Transaction transaction, Integer id) {
-        Formation formation = null;
+    public Salle findById(SessionFactory sessionFactory, Transaction transaction, SalleId salleId) {
+        Salle salle =  null;
         try(Session session = sessionFactory.openSession() ) {
             transaction = session.beginTransaction();
-            formation = session.get(Formation.class, id);
+            salle = session.get(Salle.class, salleId);
             transaction.commit();
         } catch (HibernateException he) {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
         }
-        return formation;
+        return salle;
     }
 
     @Override
-    public Formation create(SessionFactory sessionFactory, Transaction transaction, Formation formation) {
+    public Salle create(SessionFactory sessionFactory, Transaction transaction, Salle salle) {
         try(Session session = sessionFactory.openSession() ) {
             transaction = session.beginTransaction();
-            session.save(formation);
+            session.save(salle);
             transaction.commit();
-            return formation;
+            return salle;
         } catch (HibernateException he) {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
@@ -74,12 +63,12 @@ public class FormationDao extends GenericDao<Formation, Integer> {
     }
 
     @Override
-    public Formation update(SessionFactory sessionFactory, Transaction transaction, Formation formation) {
+    public Salle update(SessionFactory sessionFactory, Transaction transaction, Salle salle) {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            session.update(formation);
+            session.update(salle);
             transaction.commit();
-            return formation;
+            return salle;
         } catch (HibernateException he) {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
@@ -88,27 +77,17 @@ public class FormationDao extends GenericDao<Formation, Integer> {
     }
 
     @Override
-    public boolean delete(SessionFactory sessionFactory, Transaction transaction, Formation formation) {
+    public boolean delete(SessionFactory sessionFactory, Transaction transaction, Salle salle) {
         boolean flag = false;
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            //deleteCours(formation, session);
-            session.delete(formation);
+            session.delete(salle);
             transaction.commit();
             flag = true;
-        } catch (HibernateException he) {
+        }catch (HibernateException he) {
             if (transaction != null) transaction.rollback();
             he.printStackTrace();
         }
         return flag;
     }
-
-    private static void deleteCours(Formation formation, Session session) {
-        Set<Cours> cours = formation.getList_cours();
-        for (Cours c : cours) {
-            session.delete(c);
-        }
-    }
-
-
 }

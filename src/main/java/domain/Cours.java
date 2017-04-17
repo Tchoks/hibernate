@@ -6,6 +6,9 @@ import javax.persistence.*;
  * Created by marti on 16/04/2017.
  */
 
+// TODO : utiliser une clé composée? à revoir.
+
+
 @Entity
 @Table(name = "Cours")
 public class Cours {
@@ -14,8 +17,10 @@ public class Cours {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cours_id")
     private int id;
+
     @Column(name = "nom")
     private String nom_cours;
+
     @ManyToOne(optional = false)
     @JoinColumn(name = "formation_id")
     private Formation formation;
@@ -71,5 +76,14 @@ public class Cours {
         result = 31 * result + getNom_cours().hashCode();
         result = 31 * result + getFormation().hashCode();
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "Cours{" +
+                "id=" + id +
+                ", nom_cours='" + nom_cours + '\'' +
+                ", formation=" + formation +
+                '}';
     }
 }

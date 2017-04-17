@@ -16,8 +16,10 @@ public class Formation {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "formation_id")
     private int id;
+
     @Column(name = "nom", nullable = false, length = 50)
     private String nom_formation;
+
     @OneToMany(mappedBy = "formation", cascade = CascadeType.ALL)
     //@JoinColumn(name = "formation_id")
     private Set<Cours> list_cours;
@@ -83,6 +85,7 @@ public class Formation {
         return "Formation{" +
                 "id=" + id +
                 ", nom_formation='" + nom_formation + '\'' +
+                ", list_cours=" + list_cours +
                 '}';
     }
 }

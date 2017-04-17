@@ -8,6 +8,10 @@ import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
+import wagu.Board;
+import wagu.Table;
+
+import java.util.List;
 
 /**
  *  We want to use this class to create a single instance of JDBC connection.
@@ -35,23 +39,15 @@ public class HibernateUtil {
     }
 
 
-   /*private static final SessionFactory sessionFactory = buildSessionFactory();
-
-    private static SessionFactory buildSessionFactory() {
-        try {
-            // Create the SessionFactory from hibernate.cfg.xml
-            return new Configuration().configure().buildSessionFactory();
-        }
-        catch (Throwable ex) {
-            // Make sure you log the exception, as it might be swallowed
-            System.err.println("Initial SessionFactory creation failed." + ex);
-            throw new ExceptionInInitializerError(ex);
-        }
-    }
-*/
-
     public static SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+
+    public static void table(List<String> headersList, List<List<String>> rowsList) {
+        Board board = new Board(100);
+        String tableString = board.setInitialBlock(new Table(board, 100, headersList, rowsList).tableToBlocks()).build().getPreview();
+        System.out.println(tableString);
     }
 
     /*public static Session getSession() {
