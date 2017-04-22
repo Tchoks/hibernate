@@ -18,11 +18,11 @@ public class Driver {
     private static Transaction transaction = null;
     public static void main(String[] args) throws BusinessException {
 
+        // Instantiating daos
         GenericDao<Formation, Integer> formationDao = new FormationDao();
         GenericDao<Cours, CoursId> coursDao = new CoursDao();
         GenericDao<Salle, SalleId> salleDao = new SalleDao();
         GenericDao<Seance, Integer> seanceDao = new SeanceDao();
-
 
 
 
@@ -84,15 +84,17 @@ public class Driver {
         seanceDao.create(sessionFactory, transaction, seance3);
 
         // add courses to formation, here all our objects are persistent
-        formation_finance.addCours(cours_optimization);
+        /*formation_finance.addCours(cours_optimization);
         formation_id.addCours(cours_J2EE);
         formation_sitn.addCours(cours_bigdata);
+        */
 
         // add seances to courses
-        cours_optimization.addSeance(seance3);
+        /*cours_optimization.addSeance(seance3);
         cours_bigdata.addSeance(seance);
         cours_J2EE.addSeance(seance1);
         cours_J2EE.addSeance(seance2);
+        */
 
         // new list of courses
         System.out.println("List of courses : ");
@@ -112,7 +114,7 @@ public class Driver {
         formationDao.update(sessionFactory, transaction, finance);
 
         // list all formations from database after update
-        System.out.println("List of formations after update: ");
+        System.out.println("List of formations after updating formation: " + finance.getNom_formation());
         formationDao.findAll(sessionFactory, transaction);
 
 
@@ -121,16 +123,16 @@ public class Driver {
         formationDao.delete(sessionFactory, transaction, updated);
 
         // new list
-        System.out.println("New list of formations after delete: ");
+        System.out.println("New list of formations after deleting formation: " + updated.getNom_formation());
         formationDao.findAll(sessionFactory, transaction);
 
 
         // new list of courses after delete
-        System.out.println("New list of courses after delete: ");
+        System.out.println("New list of courses after deleting formation: " + updated.getNom_formation());
         coursDao.findAll(sessionFactory, transaction);
 
         // list of seance after delete
-        System.out.println("Seance in the database after delete: ");
+        System.out.println("Seance in the database after deleting formation: " + updated.getNom_formation());
         seanceDao.findAll(sessionFactory, transaction);
 
 

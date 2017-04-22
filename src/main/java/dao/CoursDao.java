@@ -51,6 +51,7 @@ public class CoursDao extends GenericDao<Cours, CoursId> {
         try(Session session = sessionFactory.openSession() ) {
           transaction = session.beginTransaction();
           cours = session.get(Cours.class, coursId);
+         // cours = session.load(Cours.class, coursId);
           transaction.commit();
         }catch (HibernateException he) {
             if (transaction != null) transaction.rollback();

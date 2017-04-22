@@ -20,7 +20,7 @@ public class Formation {
     @Column(name = "nom", nullable = false, length = 50)
     private String nom_formation;
 
-    @OneToMany(mappedBy = "coursId.formation", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "coursId.formation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<Cours> list_cours;
 
     private Formation() {}

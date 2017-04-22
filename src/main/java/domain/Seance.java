@@ -15,14 +15,14 @@ public class Seance {
     @Column(name = "sid")
     private int id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumns( {
             @JoinColumn(name = "fid", referencedColumnName = "fid"),
             @JoinColumn(name = "cid", referencedColumnName = "cid")
     })
     private Cours cours;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumns( {
             @JoinColumn(name = "batiment", referencedColumnName = "batiment"),
             @JoinColumn(name = "numero_salle", referencedColumnName = "numero_salle")

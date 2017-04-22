@@ -20,7 +20,7 @@ public class Salle {
     @Column(name = "capacite", nullable = false)
     private int capacite;
 
-    @OneToMany(mappedBy = "salle")
+    @OneToMany(mappedBy = "salle", fetch = FetchType.EAGER)
     private Set<Seance> seances;
 
     public Salle() {}

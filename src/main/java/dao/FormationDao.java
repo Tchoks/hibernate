@@ -32,7 +32,6 @@ public class FormationDao extends GenericDao<Formation, Integer> {
                 for (Cours c : cours) {
                     buffer.append(c.getNom_cours()).append("; ");
                 }
-                //System.out.println("Cours List: " + buffer);
                 rowsList = Arrays.asList( Arrays.asList(String.valueOf(formation.getId()), formation.getNom_formation(), buffer.toString()));
                 HibernateUtil.table(headersList, rowsList);
             }
@@ -106,6 +105,9 @@ public class FormationDao extends GenericDao<Formation, Integer> {
             session.delete(c);
         }
     }
+
+
+
 
 
 }
