@@ -2,10 +2,9 @@ package domain;
 
 import exceptions.BusinessException;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by marti on 16/04/2017.
@@ -21,12 +20,16 @@ public class Salle {
     @Column(name = "capacite", nullable = false)
     private int capacite;
 
+    @OneToMany(mappedBy = "salle")
+    private Set<Seance> seances;
+
     public Salle() {}
 
     public Salle(SalleId id, int capacite) throws BusinessException {
         this.id = id;
         if (capacite < 1) throw new BusinessException(" capacity must be greater or equals to 1");
         this.capacite = capacite;
+        seances = new HashSet<>();
     }
 
     public SalleId getId() {
@@ -45,6 +48,17 @@ public class Salle {
         this.capacite = capacite;
     }
 
+    public void addSeance(Seance seance) {
+        seances.add(seance);
+    }
+
+    public Set<Seance> getSeances() {
+        return seances;
+    }
+
+    public void setSeances(Set<Seance> seances) {
+        this.seances = seances;
+    }
 
     @Override
     public boolean equals(Object o) {

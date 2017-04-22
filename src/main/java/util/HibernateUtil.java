@@ -45,8 +45,8 @@ public class HibernateUtil {
 
 
     public static void table(List<String> headersList, List<List<String>> rowsList) {
-        Board board = new Board(100);
-        String tableString = board.setInitialBlock(new Table(board, 100, headersList, rowsList).tableToBlocks()).build().getPreview();
+        Board board = new Board(150);
+        String tableString = board.setInitialBlock(new Table(board, 150, headersList, rowsList).tableToBlocks()).build().getPreview();
         System.out.println(tableString);
     }
 

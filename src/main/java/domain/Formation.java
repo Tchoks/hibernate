@@ -14,14 +14,13 @@ public class Formation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "formation_id")
+    @Column(name = "fid")
     private int id;
 
     @Column(name = "nom", nullable = false, length = 50)
     private String nom_formation;
 
-    @OneToMany(mappedBy = "formation", cascade = CascadeType.ALL)
-    //@JoinColumn(name = "formation_id")
+    @OneToMany(mappedBy = "coursId.formation", cascade = CascadeType.ALL)
     private Set<Cours> list_cours;
 
     private Formation() {}

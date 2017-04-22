@@ -1,6 +1,8 @@
 package domain;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by marti on 16/04/2017.
@@ -13,32 +15,33 @@ import javax.persistence.*;
 @Table(name = "Cours")
 public class Cours {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "cours_id")
-    private int id;
+    @EmbeddedId
+    @AttributeOverrides({
+            @AttributeOverride(name = "fid", column = @Column(name = "fid")),
+            @AttributeOverride(name = "cid", column = @Column(name = "cid"))
+    })
+    private CoursId coursId;
 
     @Column(name = "nom")
     private String nom_cours;
 
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "formation_id")
-    private Formation formation;
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.ALL)
+    private Set<Seance> seances;
 
     private Cours() {}
 
-    public Cours(String nom_cours, Formation formation) {
+    public Cours(CoursId coursId, String nom_cours) {
+        this.coursId = coursId;
         this.nom_cours = nom_cours;
-        this.formation = formation;
+        seances = new HashSet<>();
     }
 
-
-    public int getId() {
-        return id;
+    public CoursId getCoursId() {
+        return coursId;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCoursId(CoursId coursId) {
+        this.coursId = coursId;
     }
 
     public String getNom_cours() {
@@ -49,14 +52,17 @@ public class Cours {
         this.nom_cours = nom_cours;
     }
 
-    public Formation getFormation() {
-        return formation;
+    public void addSeance(Seance seance) {
+        seances.add(seance);
     }
 
-    public void setFormation(Formation formation) {
-        this.formation = formation;
+    public Set<Seance> getSeances() {
+        return seances;
     }
 
+    public void setSeances(Set<Seance> seances) {
+        this.seances = seances;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -65,25 +71,14 @@ public class Cours {
 
         Cours cours = (Cours) o;
 
-        if (getId() != cours.getId()) return false;
-        if (!getNom_cours().equals(cours.getNom_cours())) return false;
-        return getFormation().equals(cours.getFormation());
+        if (!getCoursId().equals(cours.getCoursId())) return false;
+        return getNom_cours().equals(cours.getNom_cours());
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
+        int result = getCoursId().hashCode();
         result = 31 * result + getNom_cours().hashCode();
-        result = 31 * result + getFormation().hashCode();
         return result;
-    }
-
-    @Override
-    public String toString() {
-        return "Cours{" +
-                "id=" + id +
-                ", nom_cours='" + nom_cours + '\'' +
-                ", formation=" + formation +
-                '}';
     }
 }
