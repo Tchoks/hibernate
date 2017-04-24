@@ -13,8 +13,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by marti on 17/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
+
 public class CoursDao extends GenericDao<Cours, CoursId> {
 
 
@@ -51,7 +53,6 @@ public class CoursDao extends GenericDao<Cours, CoursId> {
         try(Session session = sessionFactory.openSession() ) {
           transaction = session.beginTransaction();
           cours = session.get(Cours.class, coursId);
-         // cours = session.load(Cours.class, coursId);
           transaction.commit();
         }catch (HibernateException he) {
             if (transaction != null) transaction.rollback();

@@ -7,7 +7,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by marti on 16/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 @Entity
@@ -20,7 +21,7 @@ public class Salle {
     @Column(name = "capacite", nullable = false)
     private int capacite;
 
-    @OneToMany(mappedBy = "salle", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "salle"/*, fetch = FetchType.EAGER*/)
     private Set<Seance> seances;
 
     public Salle() {}

@@ -8,7 +8,8 @@ import org.hibernate.Transaction;
 import util.HibernateUtil;
 
 /**
- * Created by marti on 16/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 

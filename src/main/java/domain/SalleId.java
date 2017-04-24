@@ -5,7 +5,8 @@ import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
- * Created by marti on 17/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 @Embeddable

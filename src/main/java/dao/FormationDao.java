@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * Created by marti on 17/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 public class FormationDao extends GenericDao<Formation, Integer> {
 

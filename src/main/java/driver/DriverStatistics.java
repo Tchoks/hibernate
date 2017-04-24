@@ -12,7 +12,8 @@ import java.util.Map;
 import java.util.SortedSet;
 
 /**
- * Created by marti on 22/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 public class DriverStatistics {
 
@@ -93,6 +94,15 @@ public class DriverStatistics {
         //cours_bigdata.addSeance(seance);
         //cours_J2EE.addSeance(seance1);
         //cours_J2EE.addSeance(seance2);
+
+        SortedSet<Map.Entry<String, Integer>> coursesForAFormationWithJava = Statistics.CoursesForAFormationWithJava(sessionFactory, transaction, 1);
+        System.out.println("nombre de cours de la  formation: " + formation_finance.getId() + " avec JAVA");
+        Statistics.print(coursesForAFormationWithJava);
+
+        SortedSet<Map.Entry<String, Integer>> coursesForAFormationWithHql = Statistics.CoursesForAFormationWithHql(sessionFactory, transaction, 1);
+        System.out.println("nombre de cours de la  formation: " + formation_finance.getId() + " avec HQL");
+        Statistics.print(coursesForAFormationWithHql);
+
 
         SortedSet<Map.Entry<String, Integer>> coursesForEachFormation = Statistics.CoursesForEachFormation(sessionFactory, transaction);
         System.out.println("nombre de cours par formations: ");

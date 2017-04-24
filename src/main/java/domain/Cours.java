@@ -5,11 +5,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by marti on 16/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
-
-// TODO : utiliser une clé composée? à revoir.
-
 
 @Entity
 @Table(name = "Cours")
@@ -25,7 +23,7 @@ public class Cours {
     @Column(name = "nom")
     private String nom_cours;
 
-    @OneToMany(mappedBy = "cours", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "cours", cascade = CascadeType.ALL/*, fetch = FetchType.EAGER*/)
     private Set<Seance> seances;
 
     private Cours() {}
@@ -71,15 +69,11 @@ public class Cours {
 
         Cours cours = (Cours) o;
 
-        //if (!getCoursId().equals(cours.getCoursId())) return false;
-        //return getNom_cours().equals(cours.getNom_cours());
         return getCoursId().equals(cours.getCoursId()) && getNom_cours().equals(cours.getNom_cours());
     }
 
     @Override
     public int hashCode() {
-        int result = getCoursId().hashCode();
-        //result = 31 * result + getNom_cours().hashCode();
-        return result;
+        return getCoursId().hashCode();
     }
 }

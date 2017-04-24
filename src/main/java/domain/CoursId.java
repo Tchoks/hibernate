@@ -1,10 +1,14 @@
 package domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
- * Created by marti on 22/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 @Embeddable
@@ -13,7 +17,7 @@ public class CoursId implements Serializable {
     @Column(name = "cid")
     private int id;
 
-    @ManyToOne(optional = false, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false/*, fetch = FetchType.EAGER*/)
     @JoinColumn(name = "fid")
     private Formation formation;
 

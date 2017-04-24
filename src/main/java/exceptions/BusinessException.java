@@ -1,8 +1,11 @@
 package exceptions;
 
 /**
- * Created by marti on 17/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
+
+
 public class BusinessException extends Exception {
 
     public BusinessException() {}

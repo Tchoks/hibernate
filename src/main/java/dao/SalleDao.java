@@ -12,8 +12,10 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by marti on 17/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
+
 public class SalleDao extends GenericDao<Salle, SalleId>  {
     @Override
     public void findAll(SessionFactory sessionFactory, Transaction transaction) {

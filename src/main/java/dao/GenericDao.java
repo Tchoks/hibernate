@@ -19,9 +19,4 @@ public abstract class GenericDao<T, ID extends Serializable> {
    public  abstract T update(SessionFactory sessionFactory, Transaction transaction, T object);
 
    public abstract boolean delete(SessionFactory sessionFactory, Transaction transaction, T object);
-
-
-
-
-
 }

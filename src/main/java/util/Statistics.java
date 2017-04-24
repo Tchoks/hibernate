@@ -11,9 +11,50 @@ import org.hibernate.Transaction;
 import java.util.*;
 
 /**
- * Created by marti on 22/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
+
 public class Statistics {
+
+
+    // ==========================================================> Statistics with Plain Java <======================================================================
+
+    public static SortedSet<Map.Entry<String, Integer>> CoursesForAFormationWithJava(SessionFactory sessionFactory, Transaction transaction, Integer id) {
+
+        Map<String, Integer> result = new TreeMap<>();
+
+        try(Session session = sessionFactory.openSession() ) {
+            transaction = session.beginTransaction();
+            Formation formation = session.get(Formation.class, id);
+                result.put(formation.getNom_formation(), formation.getList_cours().size());
+        } catch (HibernateException he) {
+            if (transaction != null) transaction.rollback();
+            he.printStackTrace();
+        }
+        return entriesSortedByValues(result);
+    }
+
+
+
+    // =====================================================================> Statistics with Plain HQL <======================================================================
+
+    public static SortedSet<Map.Entry<String, Integer>> CoursesForAFormationWithHql(SessionFactory sessionFactory, Transaction transaction, Integer id) {
+
+        Map<String, Integer> result = new TreeMap<>();
+
+        try(Session session = sessionFactory.openSession() ) {
+            transaction = session.beginTransaction();
+            Formation f = (Formation) session.createQuery("select f from Formation f left join f.list_cours where f.id =:fid").setParameter("fid", id)
+                    .uniqueResult();
+            result.put(f.getNom_formation(), f.getList_cours().size());
+        } catch (HibernateException he) {
+            if (transaction != null) transaction.rollback();
+            he.printStackTrace();
+        }
+        return entriesSortedByValues(result);
+    }
+
 
 
     public static SortedSet<Map.Entry<String, Integer>> CoursesForEachFormation(SessionFactory sessionFactory, Transaction transaction) {
@@ -22,9 +63,9 @@ public class Statistics {
 
         try(Session session = sessionFactory.openSession() ) {
             transaction = session.beginTransaction();
-            List<Formation> formations = session.createQuery("from Formation ").list();
+            List<Formation> formations =  session.createQuery("from Formation").getResultList();
             for (Formation formation : formations) {
-                result.put(formation.getNom_formation(), formation.getList_cours().size());
+            result.put(formation.getNom_formation(), formation.getList_cours().size());
             }
         } catch (HibernateException he) {
             if (transaction != null) transaction.rollback();

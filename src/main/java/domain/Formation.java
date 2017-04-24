@@ -5,7 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by marti on 16/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 @Entity
@@ -20,7 +21,7 @@ public class Formation {
     @Column(name = "nom", nullable = false, length = 50)
     private String nom_formation;
 
-    @OneToMany(mappedBy = "coursId.formation", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+@OneToMany(mappedBy = "coursId.formation", cascade = CascadeType.ALL/*, fetch = FetchType.EAGER*/)
     private Set<Cours> list_cours;
 
     private Formation() {}
@@ -68,15 +69,12 @@ public class Formation {
 
         Formation formation = (Formation) o;
 
-        if (getId() != formation.getId()) return false;
         return getNom_formation().equals(formation.getNom_formation());
     }
 
     @Override
     public int hashCode() {
-        int result = getId();
-        result = 31 * result + getNom_formation().hashCode();
-        return result;
+        return getNom_formation().hashCode();
     }
 
     @Override

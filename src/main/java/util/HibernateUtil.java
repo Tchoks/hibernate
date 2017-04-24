@@ -1,7 +1,8 @@
 package util;
 
 /**
- * Created by marti on 15/04/2017.
+ * @authors Martin Tchokonthe And Mohammed Sylla
+ * @date on 17/04/2017.
  */
 
 import org.hibernate.SessionFactory;
@@ -20,7 +21,6 @@ public class HibernateUtil {
 
     private static SessionFactory sessionFactory;
     private static ServiceRegistry serviceRegistry;
-   // private static ThreadLocal<Session> threadlocal;
 
     static {
 
@@ -29,7 +29,6 @@ public class HibernateUtil {
 
             serviceRegistry = new StandardServiceRegistryBuilder().applySettings(configuration.getProperties()).build();
             sessionFactory = configuration.buildSessionFactory();
-            //threadlocal = new ThreadLocal<Session>();
 
         } catch (Throwable throwable) {
             System.err.println("Error creating Session: " + throwable);
@@ -44,33 +43,17 @@ public class HibernateUtil {
     }
 
 
+    /**
+     *
+     * @param headersList
+     * @param rowsList
+     *
+     * it will print for us a friendly table
+     */
     public static void table(List<String> headersList, List<List<String>> rowsList) {
         Board board = new Board(150);
         String tableString = board.setInitialBlock(new Table(board, 150, headersList, rowsList).tableToBlocks()).build().getPreview();
         System.out.println(tableString);
     }
-
-    /*public static Session getSession() {
-        Session session = threadlocal.get();
-        if (session == null) {
-            session = sessionFactory.openSession();
-            threadlocal.set(session);
-        }
-        return session;
-    }
-
-    public static void closeSession() {
-        Session session = threadlocal.get();
-        if (session != null) {
-            session.close();
-            threadlocal.set(null);
-        }
-    }
-
-    public static void closeSessionFactory() {
-        sessionFactory.close();
-        StandardServiceRegistryBuilder.destroy(serviceRegistry);
-    }
-    */
 
 }
